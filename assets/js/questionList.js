@@ -11,8 +11,8 @@ const questions = [
     {
         question: "Are Javascript and Java related?",
         answer: [
-            {answerText: "true", isCorrect: false},
-            {answerText: "false", isCorrect: true}
+            {answerText: "yes", isCorrect: false},
+            {answerText: "no", isCorrect: true}
         ]
     },
     {

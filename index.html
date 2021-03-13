@@ -1,27 +1,97 @@
 <!DOCTYPE html>
 
 <html>
-    <head>
-        <meta charset="utf-8">
-        <meta http-equiv="X-UA-Compatible" content="IE=edge">
-        <title></title>
-        <meta name="description" content="">
-        <meta name="viewport" content="width=device-width, initial-scale=1">
-        <link rel="stylesheet" href="assets/css/style.css">
-        <link rel="stylesheet" href="assets/css/jass.css">
-        <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-BmbxuPwQa2lc/FVzBcNJ7UAyJxM6wuqIj61tLrc4wSX0szH/Ev+nYRRuWlolflfl" crossorigin="anonymous">
-    </head>
-    <body class="bg-dark text-light">
-        <main>
-            <h1 class="p-3">Welcome to the Coding Quiz</h1>
-            <hr/>
-            <p class="time">Time: <span id="timer"></span></p>
-            <button id="start" class="btn btn-info" style="margin-left: 45%;">Start!</button>
-        </main>     
-        <script src="https://code.jquery.com/jquery-3.6.0.min.js" integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
-        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta2/dist/js/bootstrap.bundle.min.js" integrity="sha384-b5kHyXgcpbZJO/tY9Ul7kGkf1S0CWuKcCD38l8YkeH8z8QjE0GmW1gYU5S9FOnJ0" crossorigin="anonymous"></script>
+   <head>
+      <meta charset="utf-8" />
+      <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+      <title></title>
+      <meta name="description" content="" />
+      <meta name="viewport" content="width=device-width, initial-scale=1" />
+      <link rel="stylesheet" href="assets/css/style.css" />
+      <link
+         href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta2/dist/css/bootstrap.min.css"
+         rel="stylesheet"
+         integrity="sha384-BmbxuPwQa2lc/FVzBcNJ7UAyJxM6wuqIj61tLrc4wSX0szH/Ev+nYRRuWlolflfl"
+         crossorigin="anonymous"
+      />
+   </head>
+   <body class="bg-dark text-light">
+      <header class="container-fluid bg-dark text-light p-3">
+         <div class="d-flex justify-content-center">
+            <h1>Welcome to the Coding Quiz!</h1>
+         </div>
+      </header>
+      <hr />
 
-        <script src="assets/js/script.js" async defer></script>
-        <script src="assets/js/questionList.js"></script>
-    </body>
+      <main>
+         <p id="time">Time: <span id="timer"></span></p>
+
+         <div class="container" id="welcome">
+            <div class="card bg-secondary mb-3">
+               <div class="card-body">This is where the welcome message goes.</div>
+            </div>
+            <div class="d-flex justify-content-center">
+               <button id="start" class="btn btn-outline-light">Start!</button>
+            </div>
+         </div>
+
+         <div class="container" id="question">
+            <div class="card bg-secondary">
+               <div class="card-header">
+                  <h4 id="question-num">Question 1</h4>
+               </div>
+               <div class="card-body" id="question-text">This is where the questions go.</div>
+            </div>
+            
+            <div class="row">
+               <div class="btn-group-vertical my-3" role="group" aria-label="answers">
+                  <input type="radio" class="btn-check" name="btnradio" id="radio1"/>
+                  <label class="btn btn-outline-light" for="radio1" id="answer1">Answer 1</label>
+
+                  <input type="radio" class="btn-check" name="btnradio" id="radio2"/>
+                  <label class="btn btn-outline-light" for="radio2" id="answer2">Answer 2</label>
+
+                  <input type="radio" class="btn-check" name="btnradio" id="radio3"/>
+                  <label class="btn btn-outline-light" for="radio3" id="answer3">Answer 3</label>
+
+                  <input type="radio" class="btn-check" name="btnradio" id="radio4"/>
+                  <label class="btn btn-outline-light" for="radio4" id="answer4">Answer 4</label>
+               </div>
+            </div>
+            <button id="answer-submit" type="submit" class="btn btn-outline-light">Sumbit Answer</button>
+         </div>
+
+         <div class="container" id="time-up">
+             <div class="card bg-secondary">
+                 <div class="card-header">
+                     <h4>All done!</h4>
+                 </div>
+                 <div class="card-body">
+                    Your final score is: <span id="score">0</span>
+                 </div>
+                 <div class="card-footer">
+                     <div class="input-group my-3">
+                         <span class="input-group-text">Enter your initials: </span>
+                         <input type="text" class="form-control" placeholder='"ABC"'>
+                     </div>
+                     <button type="submit" id="initial-submit" class="btn btn-outline-light">Submit</button>
+                 </div>
+             </div>
+         </div>
+      </main>
+
+      <script
+         src="https://code.jquery.com/jquery-3.6.0.min.js"
+         integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4="
+         crossorigin="anonymous"
+      ></script>
+      <script
+         src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta2/dist/js/bootstrap.bundle.min.js"
+         integrity="sha384-b5kHyXgcpbZJO/tY9Ul7kGkf1S0CWuKcCD38l8YkeH8z8QjE0GmW1gYU5S9FOnJ0"
+         crossorigin="anonymous"
+      ></script>
+
+      <script src="assets/js/script.js" async defer></script>
+      <script src="assets/js/questionList.js"></script>
+   </body>
 </html>
