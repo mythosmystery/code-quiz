@@ -1,5 +1,5 @@
 const TIME_ALLOWED = 60;
-const TIME_INTERVAL = 20;
+const TIME_INTERVAL = 10;
 
 var startBtnEl = $("#start");
 var timeEl = $("#timer");
@@ -19,17 +19,19 @@ var initialsListEl = $("#initials");
 var highScoreCardEl = $("#highscores");
 var invalidInitialsEl = $("#invalid-initials-alert");
 var initialInputEl = $("#initial-input");
+var backBtnEl = $("#back");
+var clearBtnEl = $("#clear-scores");
 
 var timer;
 var timeLeft = TIME_ALLOWED;
 var score = 0;
+var currentQuestion = 0;
 
 displayWelcomeMessage();
 
 startBtnEl.on("click", quizStart);
 
-function quizStart() {
-   var currentQuestion = 0;
+function quizStart() {   
    welcomeCardEl.hide();
    timerStart();
    displayQuestion(currentQuestion);
@@ -47,6 +49,12 @@ function quizStart() {
          }, 1000);
       }
    });
+}
+function restartQuiz(){
+    timeLeft = TIME_ALLOWED;
+    score = 0;
+    currentQuestion = 0;
+    displayWelcomeMessage();
 }
 function displayWelcomeMessage() {
    welcomeCardEl.show();
@@ -68,6 +76,7 @@ function timerStart() {
    }, 1000);
 }
 function displayQuestion(currentQuestion) {
+    console.log(currentQuestion);
    hideAnswers();
    questionCardEl.show();
    questionNumEl.text("Question " + (currentQuestion + 1));
@@ -90,15 +99,18 @@ function checkAnswer(currentQuestion) {
    var isCorrect;
    for (let i = 0; i < radioListEl.length; i++) {
       if (radioListEl[i].is(":checked") && questions[currentQuestion].answer[i].isCorrect) {
-         correctAlertEl.show();
-         addTime();
+         correctAlertEl.show();         
          return;
       } else if (radioListEl[i].is(":checked") && !questions[currentQuestion].answer[i].isCorrect) {
          incorrectAlertEl.show();
          isCorrect = false;
       }
    }
-   if (!isCorrect) removeTime();
+   if (!isCorrect && timeLeft > TIME_INTERVAL){
+    removeTime();
+   } else if(!isCorrect){
+       timeLeft = 0;
+   }
 }
 function timeUp() {
    clearInterval(timer);
@@ -114,8 +126,7 @@ function getInitials() {
             invalidInitialsEl.show();
         }else{
             addHighScore(initialInputEl.val());
-        }
-        
+        }        
     });
 }
 function addHighScore(initials){
@@ -123,15 +134,15 @@ function addHighScore(initials){
     newHighScore.text(initials+" : "+score);
     initialsListEl.append(newHighScore);
     showHighScores();
+    backBtnEl.on("click", function(){
+        restartQuiz();
+    });
 }
 function showHighScores() {
     timeUpCardEl.hide();
     highScoreCardEl.show();
 }
 function clearHighScore() {}
-function addTime() {
-   timeLeft += TIME_INTERVAL;
-}
 function removeTime() {
    timeLeft -= TIME_INTERVAL;
 }
