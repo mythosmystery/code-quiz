@@ -1,6 +1,7 @@
 const TIME_ALLOWED = 60;
 const TIME_INTERVAL = 10;
 
+//JQuery declarations
 var startBtnEl = $("#start");
 var timeEl = $("#timer");
 var welcomeCardEl = $("#welcome");
@@ -30,6 +31,7 @@ var currentQuestion = 0;
 
 displayWelcomeMessage();
 
+//event listeners for our buttons
 startBtnEl.on("click", quizStart);
 submitAnswerEl.on("click", submitAnswer);
 initialSubmitEl.on("click", getInitials);
@@ -37,6 +39,7 @@ clearBtnEl.on("click", clearHighScore);
 viewScoreBtnEl.on("click", showHighScores);
 backBtnEl.on("click", restartQuiz);
 
+//starts main quiz logic
 function quizStart() {   
     console.log("quiz start");
    welcomeCardEl.hide();
@@ -44,6 +47,8 @@ function quizStart() {
    displayQuestion(currentQuestion);     
    console.log("end of func");
 }
+
+//submits answer and goes to next question
 function submitAnswer(){ 
         console.log("submit answer");     
         checkAnswer(currentQuestion);
@@ -58,6 +63,8 @@ function submitAnswer(){
            }, 1000);
         }       
 }
+
+//restarts the quiz when the go back button is clicked
 function restartQuiz(){
     timeLeft = TIME_ALLOWED;
     score = 0;
@@ -66,6 +73,8 @@ function restartQuiz(){
     clearInterval(timer);
     displayWelcomeMessage();    
 }
+
+//displays welcome message and clears other cards
 function displayWelcomeMessage() {
     
    welcomeCardEl.show();
@@ -74,6 +83,8 @@ function displayWelcomeMessage() {
    highScoreCardEl.hide();
    invalidInitialsEl.hide();
 }
+
+//starts the set interval timer and calls timeUp when it runs out
 function timerStart() {
    console.log("timer started");
 
@@ -86,6 +97,8 @@ function timerStart() {
       }
    }, 1000);
 }
+
+//displays question and answers from the objects in the other file
 function displayQuestion(currentQuestion) {
     console.log(currentQuestion);
    hideAnswers();
@@ -97,6 +110,8 @@ function displayQuestion(currentQuestion) {
       answerListEl[i].text(questions[currentQuestion].answer[i].answerText);
    }
 }
+
+//resets answers for next question
 function hideAnswers() {
    for (let i = 0; i < answerListEl.length; i++) {
       answerListEl[i].hide();
@@ -105,6 +120,8 @@ function hideAnswers() {
    incorrectAlertEl.hide();
    correctAlertEl.hide();
 }
+
+//checks the selected answer against the array
 function checkAnswer(currentQuestion) {
    console.log("checking answer...");
    var isCorrect;
@@ -123,6 +140,8 @@ function checkAnswer(currentQuestion) {
        timeLeft = 0;
    }
 }
+
+//clears everything and goes to the time up card
 function timeUp() {
    clearInterval(timer);
    questionCardEl.hide();
@@ -130,6 +149,8 @@ function timeUp() {
    score = timeLeft+1;
    scoreEl.text(score);   
 }
+
+//gets users initials
 function getInitials() {    
         if(initialInputEl.val().length < 2){
             invalidInitialsEl.show();
@@ -138,12 +159,16 @@ function getInitials() {
         }        
     
 }
+
+//adds high score and initials to high score list
 function addHighScore(initials){
     var newHighScore = $("<li class='list-group-item bg-dark'>");
     newHighScore.text(initials+" : "+score);
     initialsListEl.append(newHighScore);
     showHighScores();    
 }
+
+//shows high score card, hides other cards
 function showHighScores() {
     clearInterval(timer);
     timeEl.text("");
