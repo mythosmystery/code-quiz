@@ -18,6 +18,7 @@ var correctAlertEl = $("#correct");
 var initialsListEl = $("#initials");
 var highScoreCardEl = $("#highscores");
 var invalidInitialsEl = $("#invalid-initials-alert");
+var initialInputEl = $("#initial-input");
 
 var timer;
 var timeLeft = TIME_ALLOWED;
@@ -109,15 +110,12 @@ function timeUp() {
 }
 function getInitials() {
     initialSubmitEl.on("click", function(){
-        var initialInputEl = $("#initial-input");
-        // if(initialInputEl.val().length < 2){
-        //     invalidInitialsEl.show();
-        // }else{
-        //     invalidInitialsEl.hide();
-        //     addHighScore(initialInputEl.val());
-        // }
-        console.log(initialInputEl.val());
-        addHighScore(initialInputEl.val());
+        if(initialInputEl.val().length < 2){
+            invalidInitialsEl.show();
+        }else{
+            addHighScore(initialInputEl.val());
+        }
+        
     });
 }
 function addHighScore(initials){
