@@ -78,12 +78,15 @@
                <div class="card-footer">
                   <div class="input-group my-3">
                      <span class="input-group-text">Enter your initials: </span>
-                     <input type="text" class="form-control" id="initial-input" placeholder='"ABC"'/>
+                     <input type="text" class="form-control" id="initial-input" placeholder='"ABC"' onkeypress="return /[a-z]/i.test(event.key)"/>
                   </div>
                   <button type="submit" id="initial-submit" class="btn btn-outline-light">
                      Submit
                   </button>
                </div>
+            </div>
+            <div class="alert alert-danger my-3" id="invalid-initials-alert" role="alert">
+                Must input at least two characters for initials!
             </div>
          </div>
 
@@ -93,13 +96,11 @@
                     <h4>High Scores</h4>
                 </div>
                 <div class="card-body">
-                    <ul class="list-group" id="initials"></ul>
-                    <div class="alert alert-danger" id="invalid-initials-alert" role="alert">
-                        Must input at least two characters for initials!
-                    </div>
+                    <ul class="list-group" id="initials"></ul>                    
                 </div>
             </div>
          </div>
+         
       </main>
 
       <script
