@@ -15,41 +15,57 @@ var radioListEl = [$("#radio1"), $("#radio2"), $("#radio3"), $("#radio4")];
 var initialSubmitEl = $("#initial-submit");
 var incorrectAlertEl = $("#incorrect");
 var correctAlertEl = $("#correct");
+var initialsListEl = $("#initials");
+var highScoreCardEl = $("#highscores");
+var invalidInitialsEl = $("#invalid-initials-alert");
 
 var timer;
 var timeLeft = TIME_ALLOWED;
+var score = 0;
 
-displayWelcomeMessage(true);
+displayWelcomeMessage();
 
 startBtnEl.on("click", quizStart);
 
 function quizStart() {
    var currentQuestion = 0;
-   displayWelcomeMessage(false);
+   welcomeCardEl.hide();
    timerStart();
    displayQuestion(currentQuestion);
+
+   submitAnswerEl.on("click", function () {
+      checkAnswer(currentQuestion);
+      currentQuestion++;
+      if (currentQuestion < questions.length) {
+         setTimeout(function () {
+            displayQuestion(currentQuestion);
+         }, 1000);
+      } else {
+         setTimeout(function () {
+            timeUp();
+         }, 1000);
+      }
+   });
 }
-function displayWelcomeMessage(isDisplayed) {
-   if (isDisplayed) {
-      welcomeCardEl.show();
-      questionCardEl.hide();
-      timeUpCardEl.hide();
-   } else {
-      welcomeCardEl.hide();
-   }
+function displayWelcomeMessage() {
+   welcomeCardEl.show();
+   questionCardEl.hide();
+   timeUpCardEl.hide();
+   highScoreCardEl.hide();
+   invalidInitialsEl.hide();
 }
 function timerStart() {
-    console.log("timer started");
- 
-    timer = setInterval(function () {
-       if (timeLeft >= 0) {
-          timeEl.text(timeLeft);
-          timeLeft--;
-       } else {        
-          timeUp();
-       }
-    }, 1000);
- }
+   console.log("timer started");
+
+   timer = setInterval(function () {
+      if (timeLeft >= 0) {
+         timeEl.text(timeLeft);
+         timeLeft--;
+      } else {
+         timeUp();
+      }
+   }, 1000);
+}
 function displayQuestion(currentQuestion) {
    hideAnswers();
    questionCardEl.show();
@@ -59,19 +75,6 @@ function displayQuestion(currentQuestion) {
       answerListEl[i].show();
       answerListEl[i].text(questions[currentQuestion].answer[i].answerText);
    }
-   submitAnswerEl.on("click", function () {
-      checkAnswer(currentQuestion);
-      currentQuestion++;
-      if (currentQuestion < questions.length) {
-         setTimeout(function () {
-            displayQuestion(currentQuestion);
-         }, 1000);
-      }else{
-        setTimeout(function () {
-            timeUp();
-         }, 1000);
-      }
-   });
 }
 function hideAnswers() {
    for (let i = 0; i < answerListEl.length; i++) {
@@ -87,27 +90,50 @@ function checkAnswer(currentQuestion) {
    for (let i = 0; i < radioListEl.length; i++) {
       if (radioListEl[i].is(":checked") && questions[currentQuestion].answer[i].isCorrect) {
          correctAlertEl.show();
-         isCorrect = true;         
+         addTime();
+         return;
       } else if (radioListEl[i].is(":checked") && !questions[currentQuestion].answer[i].isCorrect) {
          incorrectAlertEl.show();
-        isCorrect = false;         
-      }      
-   }   
+         isCorrect = false;
+      }
+   }
+   if (!isCorrect) removeTime();
 }
 function timeUp() {
    clearInterval(timer);
    questionCardEl.hide();
    timeUpCardEl.show();
-   scoreEl.text(timeLeft+1);
+   score = timeLeft+1;
+   scoreEl.text(score);
    getInitials();
 }
-function showHighScores() {}
-function getInitials() {}
+function getInitials() {
+    initialSubmitEl.on("click", function(){
+        var initialInputEl = $("#initial-input");
+        // if(initialInputEl.val().length < 2){
+        //     invalidInitialsEl.show();
+        // }else{
+        //     invalidInitialsEl.hide();
+        //     addHighScore(initialInputEl.val());
+        // }
+        console.log(initialInputEl.val());
+        addHighScore(initialInputEl.val());
+    });
+}
+function addHighScore(initials){
+    var newHighScore = $("<li class='list-group-item bg-dark'>");
+    newHighScore.text(initials+" : "+score);
+    initialsListEl.append(newHighScore);
+    showHighScores();
+}
+function showHighScores() {
+    timeUpCardEl.hide();
+    highScoreCardEl.show();
+}
 function clearHighScore() {}
 function addTime() {
-    timeLeft += TIME_INTERVAL;
+   timeLeft += TIME_INTERVAL;
 }
 function removeTime() {
-    timeLeft -= TIME_INTERVAL;
+   timeLeft -= TIME_INTERVAL;
 }
-
