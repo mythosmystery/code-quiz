@@ -32,11 +32,11 @@ displayWelcomeMessage();
 startBtnEl.on("click", quizStart);
 
 function quizStart() {   
+    console.log("quiz start");
    welcomeCardEl.hide();
    timerStart();
-   displayQuestion(currentQuestion);
-
-   submitAnswerEl.on("click", function () {
+   displayQuestion(currentQuestion);    
+   submitAnswerEl.on("click", function () {    
       checkAnswer(currentQuestion);
       currentQuestion++;
       if (currentQuestion < questions.length) {
@@ -48,13 +48,14 @@ function quizStart() {
             timeUp();
          }, 1000);
       }
-   });
+   });   
+   console.log("end of func");
 }
 function restartQuiz(){
     timeLeft = TIME_ALLOWED;
     score = 0;
-    currentQuestion = 0;
-    displayWelcomeMessage();
+    currentQuestion = 0;    
+    displayWelcomeMessage();    
 }
 function displayWelcomeMessage() {
    welcomeCardEl.show();
