@@ -24,7 +24,11 @@
       <hr />
 
       <main>
-         <p id="time">Time: <span id="timer"></span></p>
+          <div class="container">              
+                <button type="button" class="btn btn-outline-light" id="view-scores">View Highscores</button>
+                <p id="time">Time: <span id="timer"></span></p>           
+          </div>
+         
 
          <div class="container" id="welcome">
             <div class="card bg-secondary mb-3">
@@ -78,7 +82,13 @@
                <div class="card-footer">
                   <div class="input-group my-3">
                      <span class="input-group-text">Enter your initials: </span>
-                     <input type="text" class="form-control" id="initial-input" placeholder='"ABC"' onkeypress="return /[a-z]/i.test(event.key)"/>
+                     <input
+                        type="text"
+                        class="form-control"
+                        id="initial-input"
+                        placeholder='"ABC"'
+                        onkeypress="return /[a-z]/i.test(event.key)"
+                     />
                   </div>
                   <button type="submit" id="initial-submit" class="btn btn-outline-light">
                      Submit
@@ -86,25 +96,26 @@
                </div>
             </div>
             <div class="alert alert-danger my-3" id="invalid-initials-alert" role="alert">
-                Must input at least two characters for initials!
+               Must input at least two characters for initials!
             </div>
          </div>
 
          <div class="container" id="highscores">
             <div class="card bg-secondary my-2">
-                <div class="card-header">
-                    <h4>High Scores</h4>
-                </div>
-                <div class="card-body">
-                    <ul class="list-group" id="initials"></ul>                    
-                </div>                
+               <div class="card-header">
+                  <h4>High Scores</h4>
+               </div>
+               <div class="card-body">
+                  <ul class="list-group" id="initials"></ul>
+               </div>
             </div>
             <div class="row mx-1">
-                <button type="button" class="btn btn-outline-light" id="back">Go Back</button>
-                <button type="button" class="btn btn-outline-light" id="clear-scores">Clear Highscores</button>
+               <button type="button" class="btn btn-outline-light" id="back">Go Back</button>
+               <button type="button" class="btn btn-outline-light" id="clear-scores">
+                  Clear Highscores
+               </button>
             </div>
          </div>
-         
       </main>
 
       <script

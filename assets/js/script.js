@@ -21,6 +21,7 @@ var invalidInitialsEl = $("#invalid-initials-alert");
 var initialInputEl = $("#initial-input");
 var backBtnEl = $("#back");
 var clearBtnEl = $("#clear-scores");
+var viewScoreBtnEl = $("#view-scores");
 
 var timer;
 var timeLeft = TIME_ALLOWED;
@@ -30,34 +31,43 @@ var currentQuestion = 0;
 displayWelcomeMessage();
 
 startBtnEl.on("click", quizStart);
+submitAnswerEl.on("click", submitAnswer);
+initialSubmitEl.on("click", getInitials);
+clearBtnEl.on("click", clearHighScore);
+viewScoreBtnEl.on("click", showHighScores);
+backBtnEl.on("click", restartQuiz);
 
 function quizStart() {   
     console.log("quiz start");
    welcomeCardEl.hide();
    timerStart();
-   displayQuestion(currentQuestion);    
-   submitAnswerEl.on("click", function () {    
-      checkAnswer(currentQuestion);
-      currentQuestion++;
-      if (currentQuestion < questions.length) {
-         setTimeout(function () {
-            displayQuestion(currentQuestion);
-         }, 1000);
-      } else {
-         setTimeout(function () {
-            timeUp();
-         }, 1000);
-      }
-   });   
+   displayQuestion(currentQuestion);     
    console.log("end of func");
+}
+function submitAnswer(){ 
+        console.log("submit answer");     
+        checkAnswer(currentQuestion);
+        currentQuestion++;
+        if (currentQuestion < questions.length) {
+           setTimeout(function () {
+              displayQuestion(currentQuestion);
+           }, 1000);
+        } else {
+           setTimeout(function () {
+              timeUp();
+           }, 1000);
+        }       
 }
 function restartQuiz(){
     timeLeft = TIME_ALLOWED;
     score = 0;
-    currentQuestion = 0;    
+    currentQuestion = 0;
+    timeEl.text("");    
+    clearInterval(timer);
     displayWelcomeMessage();    
 }
 function displayWelcomeMessage() {
+    
    welcomeCardEl.show();
    questionCardEl.hide();
    timeUpCardEl.hide();
@@ -118,32 +128,33 @@ function timeUp() {
    questionCardEl.hide();
    timeUpCardEl.show();
    score = timeLeft+1;
-   scoreEl.text(score);
-   getInitials();
+   scoreEl.text(score);   
 }
-function getInitials() {
-    initialSubmitEl.on("click", function(){
+function getInitials() {    
         if(initialInputEl.val().length < 2){
             invalidInitialsEl.show();
         }else{
             addHighScore(initialInputEl.val());
         }        
-    });
+    
 }
 function addHighScore(initials){
     var newHighScore = $("<li class='list-group-item bg-dark'>");
     newHighScore.text(initials+" : "+score);
     initialsListEl.append(newHighScore);
-    showHighScores();
-    backBtnEl.on("click", function(){
-        restartQuiz();
-    });
+    showHighScores();    
 }
 function showHighScores() {
+    clearInterval(timer);
+    timeEl.text("");
+    questionCardEl.hide();
+    welcomeCardEl.hide();
     timeUpCardEl.hide();
     highScoreCardEl.show();
 }
-function clearHighScore() {}
+function clearHighScore() {
+    initialsListEl.children("li").remove();
+}
 function removeTime() {
    timeLeft -= TIME_INTERVAL;
 }
